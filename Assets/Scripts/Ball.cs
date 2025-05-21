@@ -1,4 +1,4 @@
-using Cinemachine;
+using Unity.Cinemachine;
 using System;
 using System.Collections;
 using System.Collections.Generic;
@@ -62,7 +62,7 @@ public class Ball : MonoBehaviour
             Game.Instance.SetPlayerWithBall(null);
         }
         transform.position = ballOutOfFieldposition;
-        rigidbody.velocity = Vector3.zero;
+        rigidbody.linearVelocity = Vector3.zero;
         rigidbody.angularVelocity = Vector3.zero;
         Player player;
 
@@ -122,7 +122,7 @@ public class Ball : MonoBehaviour
 
         if (transform.position.x < Game.FIELD_BOUNDARY_LOWER_X)
         {
-            if (transform.position.z>-8 && transform.position.z<8)
+            if (transform.position.z > -8 && transform.position.z < 8)
             {
                 soundNearMiss.Play();
             }
@@ -244,7 +244,7 @@ public class Ball : MonoBehaviour
     {
         timePassedBall = Time.time;
     }
-    
+
     private void UpdatePass()
     {
         if (Game.Instance.PlayerReceivingPass is HumanPlayer)
@@ -253,7 +253,7 @@ public class Ball : MonoBehaviour
             {
                 // switch player camera a bit before the player receives the ball
                 Game.Instance.ActivateHumanPlayer((HumanPlayer)Game.Instance.PlayerReceivingPass);
-//                playerFollowCamera.Follow = Game.Instance.PlayerReceivingPass.PlayerCameraRoot;
+                //                playerFollowCamera.Follow = Game.Instance.PlayerReceivingPass.PlayerCameraRoot;
             }
         }
 

@@ -1,7 +1,7 @@
-using Cinemachine;
 using System.Collections;
 using System.Collections.Generic;
 using TMPro;
+using Unity.Cinemachine;
 using UnityEngine;
 using UnityEngine.InputSystem;
 using UnityEngine.UI;
@@ -140,7 +140,7 @@ public class Game : MonoBehaviour
         for (int playerNumber = 0; playerNumber < NUM_FIELDPLAYERS; playerNumber++)
         {
             newPlayer = Instantiate(pfPlayerHuman);
-            newPlayer.name = "Player 0-" + (playerNumber+1);
+            newPlayer.name = "Player 0-" + (playerNumber + 1);
             newPlayer.GetComponent<HumanFieldPlayer>().Number = playerNumber;
             newPlayer.GetComponent<HumanFieldPlayer>().Team = team0;
             newPlayer.transform.Find("Geometry/Root/Ch38_Hair").GetComponent<Renderer>().material = materialHair[Random.Range(0, materialHair.Length)];
@@ -171,7 +171,7 @@ public class Game : MonoBehaviour
         for (int playerNumber = 0; playerNumber < NUM_FIELDPLAYERS; playerNumber++)
         {
             newPlayer = Instantiate(pfPlayerAI);
-            newPlayer.name = "Player 1-" + (playerNumber+1);
+            newPlayer.name = "Player 1-" + (playerNumber + 1);
             newPlayer.GetComponent<AIFieldPlayer>().Number = playerNumber;
             newPlayer.GetComponent<AIFieldPlayer>().Team = team1;
             newPlayer.transform.Find("Geometry/Root/Ch38_Hair").GetComponent<Renderer>().material = materialHair[Random.Range(0, materialHair.Length)];
@@ -240,9 +240,9 @@ public class Game : MonoBehaviour
 
     public void ResetPlayersAndBall()
     {
-        foreach(Team team in teams)
+        foreach (Team team in teams)
         {
-            foreach(Player player in team.Players)
+            foreach (Player player in team.Players)
             {
                 Vector3 spawnPosition = team.PlayingSide == 0 ? new Vector3(player.SpawnPosition.x, PLAYER_Y_POSITION, player.SpawnPosition.y) : new Vector3(-player.SpawnPosition.x, PLAYER_Y_POSITION, player.SpawnPosition.y);
                 player.SetPosition(spawnPosition);
@@ -250,7 +250,7 @@ public class Game : MonoBehaviour
             }
             GameObject spawnPositionGoalkeeper = team.PlayingSide == 0 ? spawnPositionGoalkeeperLeftSide : spawnPositionGoalkeeperRightSide;
             team.GoalKeeper.SetPosition(spawnPositionGoalkeeper.transform.position);
-        }       
+        }
 
         // Set player to kick off
         Vector3 position = new(0.5f - teamKickOff.Number, KickOffPosition.y, kickOffPosition.z);
@@ -259,7 +259,7 @@ public class Game : MonoBehaviour
         teamKickOff.Players[0].DoingKick = true;
         scriptBall.BallOutOfFieldTimeOut = 0;
         scriptBall.PutOnCenterSpot();
-        scriptBall.Rigidbody.velocity = Vector3.zero;
+        scriptBall.Rigidbody.linearVelocity = Vector3.zero;
         scriptBall.Rigidbody.angularVelocity = Vector3.zero;
     }
 
@@ -273,7 +273,7 @@ public class Game : MonoBehaviour
     {
         Player closestPlayer = null;
         float closestDistance = float.MaxValue;
-        foreach(Player player in teams[teamNumber].Players)
+        foreach (Player player in teams[teamNumber].Players)
         {
             if (player == teams[teamNumber].GoalKeeper)
             {
@@ -310,11 +310,11 @@ public class Game : MonoBehaviour
     public void ScoreGoal(int goalOfTeam)
     {
         goalOfTeamLastScored = goalOfTeam;
-        int teamScored = goalOfTeam==0 ? 1 : 0;
+        int teamScored = goalOfTeam == 0 ? 1 : 0;
         teams[teamScored].Stats.Score++;
         teamKickOff = Teams[goalOfTeam];
         goalTextColorAlpha = 1;
-        if(Random.value < 0.5)
+        if (Random.value < 0.5)
         {
             soundCheer1.Play();
         }
@@ -323,7 +323,7 @@ public class Game : MonoBehaviour
             soundCheer2.Play();
         }
         textScore.text = teams[0].Stats.Score + " - " + teams[1].Stats.Score;
-        playerLastTouchedBall.SetPlayerAction(ActionType_.Cheer, 0 , true);
+        playerLastTouchedBall.SetPlayerAction(ActionType_.Cheer, 0, true);
         playerLastTouchedBall.Team.Stats.ShotsOnGoal++;
         playerLastTouchedBall.Team.Stats.Goals.Add(new Goal(playerLastTouchedBall.name, gameTimer.TimePassedAs90Minutes()));
 
@@ -369,7 +369,7 @@ public class Game : MonoBehaviour
                 break;
             case GameState_.WaitingForWhistle:
                 TerminateAllRunningActions();
-                if (NextGameState==GameState_.Penalty)
+                if (NextGameState == GameState_.Penalty)
                 {
                     if (playerTakingPenalty.Team.Number == 1)
                     {
@@ -388,7 +388,7 @@ public class Game : MonoBehaviour
                 recorder.PlayBack(goalOfTeamLastScored);
                 break;
             case GameState_.Penalty:
-                if (playerTakingPenalty.Team.Number==1)
+                if (playerTakingPenalty.Team.Number == 1)
                 {
                     ((AIFieldPlayer)playerTakingPenalty).TakePenalty();
                 }
@@ -407,8 +407,8 @@ public class Game : MonoBehaviour
         GameObject.Find("CanvasGameOver/Panel/TextGoals0").GetComponent<TextMeshProUGUI>().SetText(teams[0].Stats.Score.ToString());
         GameObject.Find("CanvasGameOver/Panel/TextGoals1").GetComponent<TextMeshProUGUI>().SetText(teams[1].Stats.Score.ToString());
         float ballpossessionTeam0 = 50, ballpossessionTeam1 = 50;
-        if (teams[0].Stats.BallPosession + teams[1].Stats.BallPosession>0)
-        { 
+        if (teams[0].Stats.BallPosession + teams[1].Stats.BallPosession > 0)
+        {
             ballpossessionTeam0 = 100 * teams[0].Stats.BallPosession / (teams[0].Stats.BallPosession + teams[1].Stats.BallPosession);
             ballpossessionTeam1 = 100 * teams[1].Stats.BallPosession / (teams[0].Stats.BallPosession + teams[1].Stats.BallPosession);
         }
@@ -465,7 +465,7 @@ public class Game : MonoBehaviour
             }
         }
 
-        if (textMessage.text.Length>0)
+        if (textMessage.text.Length > 0)
         {
             if (Time.time - timeShowMessageStarted > 1)
             {
@@ -474,7 +474,7 @@ public class Game : MonoBehaviour
         }
 
 
-        if (gameState == GameState_.Replay && Time.time%1<0.5)
+        if (gameState == GameState_.Replay && Time.time % 1 < 0.5)
         {
             textReplay.text = GameState_.Replay.ToString();
         }
@@ -502,7 +502,7 @@ public class Game : MonoBehaviour
             textGoal.fontSize = 350 - (goalTextColorAlpha * 250);
         }
 
-        if (delayScoreGoal>0)
+        if (delayScoreGoal > 0)
         {
             delayScoreGoal -= Time.deltaTime;
             if (delayScoreGoal <= 0)
@@ -511,7 +511,7 @@ public class Game : MonoBehaviour
             }
         }
 
-//        PerformSanityChecks();
+        //        PerformSanityChecks();
     }
 
     public Team OtherTeam(Team team)
@@ -546,7 +546,7 @@ public class Game : MonoBehaviour
             {
                 if (player != playerToTakeDistanceFrom)
                 {
-                    float distance = (player.transform.position-playerToTakeDistanceFrom.transform.position).magnitude;
+                    float distance = (player.transform.position - playerToTakeDistanceFrom.transform.position).magnitude;
                     if (distance < 8)
                     {
                         Vector3 moveToDistanceDirection = (Vector3.zero - playerToTakeDistanceFrom.transform.position).normalized * MINIMUM_DISTANCE_FREEKICK;
@@ -704,7 +704,7 @@ public class Game : MonoBehaviour
         return closestPlayer;
     }
 
-    public Vector3 SpawnPositionGoalkeeper(Team team) 
+    public Vector3 SpawnPositionGoalkeeper(Team team)
     {
         return team.PlayingSide == 0 ? spawnPositionGoalkeeperLeftSide.transform.position : spawnPositionGoalkeeperRightSide.transform.position;
     }

@@ -1,4 +1,4 @@
-using Cinemachine;
+using Unity.Cinemachine;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -9,7 +9,7 @@ public class Player : MonoBehaviour
     protected Team team;
     protected Animator animator;
 
-    public const float NORMAL_MOVEMENT_SPEED = 8f; 
+    public const float NORMAL_MOVEMENT_SPEED = 8f;
     public const float MAX_ACTION_DURATION = 8.0f;
     [SerializeField] private Transform ballHandPosition;
     private int number;
@@ -94,7 +94,7 @@ public class Player : MonoBehaviour
 
             transform.rotation = Quaternion.RotateTowards(transform.rotation, targetRotation, Time.deltaTime * 300f);
         }
-        
+
         if (!Game.Instance.GameState.Equals(GameState_.Replay))
         {
             playerAction.Update();
@@ -254,7 +254,7 @@ public class Player : MonoBehaviour
         Vector3 shootdirection = transform.forward;
         shootdirection.y += 0.3f;
         //Debug.DrawLine(transform.position, transform.position + shootdirection * 10f, Color.white, 2.5f);
-        if (team.Number==0 && transform.position.x<-20)
+        if (team.Number == 0 && transform.position.x < -20)
         {
             if (shootdirection.x < 0)     // shooting in direction of opponent goal
             {
@@ -308,7 +308,7 @@ public class Player : MonoBehaviour
             return;
         }
         Vector3 moveDirection = new Vector3(enemyPosition.x - transform.position.x, 0, enemyPosition.z - transform.position.z).normalized;
-        targetRotation = Quaternion.LookRotation(moveDirection); 
+        targetRotation = Quaternion.LookRotation(moveDirection);
         transform.position += moveDirection * NORMAL_MOVEMENT_SPEED * Time.deltaTime;
         targetSpeed = NORMAL_MOVEMENT_SPEED * 2;
     }
@@ -328,13 +328,13 @@ public class Player : MonoBehaviour
         }
         else
         {
-            targetSpeed =  0;
+            targetSpeed = 0;
         }
     }
 
     public float GetDeltaXFromSpawnPosition()
-    { 
-        return transform.position.x - spawnPosition.x; 
+    {
+        return transform.position.x - spawnPosition.x;
     }
 
 }

@@ -1,6 +1,6 @@
-using Cinemachine;
 using System.Collections;
 using System.Collections.Generic;
+using Unity.Cinemachine;
 using UnityEngine;
 
 struct RecorderFrame
@@ -75,7 +75,7 @@ public class Recorder : MonoBehaviour
             for (int playerNumber = 0; playerNumber < numPlayersPerTeam; playerNumber++)
             {
                 Recording recording = new Recording(NUM_RECORDED_FRAMES);
-                for (int i=0; i< NUM_RECORDED_FRAMES; i++)
+                for (int i = 0; i < NUM_RECORDED_FRAMES; i++)
                 {
                     recording.frames[i].layers = new float[Game.Instance.Teams[teamNumber].Players[playerNumber].Animator.layerCount];
                 }
@@ -113,7 +113,7 @@ public class Recorder : MonoBehaviour
                 for (int layer = 0; layer < Game.Instance.Teams[teamNumber].Players[playerNumber].Animator.layerCount; layer++)
                 {
                     recordedTeams[teamNumber].players[playerNumber].frames[currentRecordingFrame].layers[layer] = Game.Instance.Teams[teamNumber].Players[playerNumber].Animator.GetLayerWeight(layer);
-//                    Utilities.LogToFile(@"F:\projects\kickit\recording.txt", "write frame" + currentRecordingFrame + " player[" + teamNumber + "][" + playerNumber + "].layer[" + layer + "] = " + Game.Instance.Teams[teamNumber].Players[playerNumber].Animator.GetLayerWeight(layer));
+                    //                    Utilities.LogToFile(@"F:\projects\kickit\recording.txt", "write frame" + currentRecordingFrame + " player[" + teamNumber + "][" + playerNumber + "].layer[" + layer + "] = " + Game.Instance.Teams[teamNumber].Players[playerNumber].Animator.GetLayerWeight(layer));
                 }
             }
         }

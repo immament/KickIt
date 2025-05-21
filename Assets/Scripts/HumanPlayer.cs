@@ -1,4 +1,4 @@
-using Cinemachine;
+using Unity.Cinemachine;
 using System.Collections;
 using System.Collections.Generic;
 using TMPro;
@@ -17,7 +17,7 @@ public class HumanPlayer : Player
         base.Awake();
 
         playerFollowCamera = GameObject.Find("VCam_PlayerFollow").GetComponent<CinemachineVirtualCamera>();
-        inputSystem = GetComponent<InputSystem>(); 
+        inputSystem = GetComponent<InputSystem>();
     }
     protected new void Start()
     {
